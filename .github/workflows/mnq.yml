@@ -1,20 +1,20 @@
-```yaml
 name: MNQ Signal
 on:
   schedule:
-• cron: "/15    *"   # every 15 min, all day
-  workflow_dispatch:          # lets you run it manually to test
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
 
 jobs:
   signal:
     runs-on: ubuntu-latest
     steps:
-• uses: actions/checkout@v4
-• uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
-• name: Run signal
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run signal
         env:
+          TVREMIX_API_KEY: ${{ secrets.TVREMIX_API_KEY }}
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_CHAT_ID:   ${{ secrets.TG_CHAT_ID }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: python mnq_signal.py
-```
